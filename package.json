@@ -1,5 +1,5 @@
 {
-    "name": "video-downloader",
+    "name": "video-capture",
     "version": "1.0.0",
     "type": "module",
     "scripts": {

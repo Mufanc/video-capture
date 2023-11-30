@@ -11,34 +11,19 @@ export function init() {
         get: new Proxy(backup.get!, {}),
         set: new Proxy(backup.set!, {
             apply(...args) {
-                const [, el, [url]] = args
+                const [, element, [url]] = args
                 const result = Reflect.apply(...args)
 
-                if (el instanceof HTMLVideoElement) {
-                    listeners.forEach(callback => callback(el, url))
+                if (element instanceof HTMLVideoElement) {
+                    listeners.forEach(callback => callback(element, url))
                 }
 
                 return result
             },
         }),
     })
-
-    // Object.setPrototypeOf(c
-    //     HTMLMediaElement,
-    //     new Proxy(HTMLMediaElement.prototype, {
-    //         set(...args): boolean {
-    //             const [, prop] = args
-    //
-    //             if (prop === 'src') {
-    //                 debugger
-    //             }
-    //
-    //             return Reflect.set(...args)
-    //         },
-    //     }),
-    // )
 }
 
-export function registerOnVideoSrcListener(callback: VideoSrcListener) {
+export function registerSrcChangeListener(callback: VideoSrcListener) {
     listeners.push(callback)
 }

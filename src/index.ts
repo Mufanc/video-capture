@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Video Downloader
+// @name         Video Capture
 // @namespace    Violentmonkey Scripts
 // @match        http*://*/*
 // @grant        GM_addStyle
@@ -9,22 +9,22 @@
 // @run-at       document-start
 // ==/UserScript==
 
-import { VideoDownloader } from '@/downloader'
+import { attachToVideo } from '@/downloader'
 
-import { init as initVideoSrcHook, registerOnVideoSrcListener } from '@/hooks/video-src'
+import { init as initVideoSrcHook, registerSrcChangeListener } from '@/hooks/video-src'
 import { init as initUrlHook } from '@/hooks/url'
-import { init as initMediaSourceHook } from '@/hooks/media-source'
+import { init as initMediaApiHook } from '@/hooks/media-api'
 
 function init() {
     initVideoSrcHook()
     initUrlHook()
-    initMediaSourceHook()
+    initMediaApiHook()
 }
 
 function main() {
     init()
-    registerOnVideoSrcListener(el => {
-        VideoDownloader.create(el)
+    registerSrcChangeListener(el => {
+        attachToVideo(el)
     })
 }
 

@@ -2,7 +2,7 @@ import fs from 'fs/promises'
 import path from 'path'
 import { glob } from 'glob'
 
-const userscript = 'video-downloader'
+const userscript = 'video-capture'
 
 !(async () => {
     const src = (await fs.readFile('src/index.ts')).toString()

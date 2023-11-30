@@ -3,7 +3,7 @@ const cache = new Map<string, MediaSource>()
 export function init() {
     URL.createObjectURL = new Proxy(URL.createObjectURL, {
         apply(...args): any {
-            const [, , [object]] = args
+            const object = args[2][0]
             const url = Reflect.apply(...args)
 
             if (object instanceof MediaSource) {
@@ -16,7 +16,7 @@ export function init() {
 
     URL.revokeObjectURL = new Proxy(URL.revokeObjectURL, {
         apply(...args) {
-            const [, , [url]] = args
+            const url: string = args[2][0]
 
             cache.delete(url)
 
